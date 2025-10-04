@@ -1,0 +1,62 @@
+@using PortalAcademico.Data
+@model Curso
+@{
+    ViewData["Title"] = "Crear curso";
+}
+<div class="container py-4">
+    <h2 class="mb-3">@ViewData["Title"]</h2>
+
+    <form asp-action="Crear" method="post" class="row g-3">
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-3">
+            <label class="form-label">Código</label>
+            <input asp-for="Codigo" class="form-control" />
+            <span asp-validation-for="Codigo" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Créditos</label>
+            <input asp-for="Creditos" type="number" class="form-control" />
+            <span asp-validation-for="Creditos" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Cupo máximo</label>
+            <input asp-for="CupoMaximo" type="number" class="form-control" />
+            <span asp-validation-for="CupoMaximo" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Inicio</label>
+            <input asp-for="HorarioInicio" type="time" class="form-control" />
+            <span asp-validation-for="HorarioInicio" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Fin</label>
+            <input asp-for="HorarioFin" type="time" class="form-control" />
+            <span asp-validation-for="HorarioFin" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" asp-for="Activo" />
+                <label class="form-check-label" asp-for="Activo">Activo</label>
+            </div>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a asp-action="Cursos" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

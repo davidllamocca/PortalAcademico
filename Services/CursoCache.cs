@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Text.Json;
 using PortalAcademico.Data;
+using System.Text.Json;
+
+namespace PortalAcademico.Services;
 
 public class CursoCache : ICursoCache
 {
@@ -10,7 +12,10 @@ public class CursoCache : ICursoCache
     private const string Key = "cursos_activos";
 
     public CursoCache(ApplicationDbContext db, IDistributedCache cache)
-    { _db = db; _cache = cache; }
+    {
+        _db = db;
+        _cache = cache;
+    }
 
     public async Task<List<Curso>> GetCursosActivosAsync()
     {
@@ -18,7 +23,11 @@ public class CursoCache : ICursoCache
         if (json is not null)
             return JsonSerializer.Deserialize<List<Curso>>(json) ?? new();
 
-        var data = await _db.Cursos.AsNoTracking().Where(c => c.Activo).OrderBy(c => c.HorarioInicio).ToListAsync();
+        var data = await _db.Cursos
+            .AsNoTracking()
+            .Where(c => c.Activo)
+            .OrderBy(c => c.HorarioInicio)
+            .ToListAsync();
 
         await _cache.SetStringAsync(
             Key,

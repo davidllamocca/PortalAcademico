@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;          // para Session.SetInt32/SetString
 using PortalAcademico.Data;
+using PortalAcademico.Services;
+
           // ICursoCache
 
 public class CatalogoController : Controller

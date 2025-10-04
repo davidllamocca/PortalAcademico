@@ -1,0 +1,74 @@
+@using PortalAcademico.Controllers
+@model IEnumerable<CoordinadorController.MatriculaRow>
+
+@{
+    var curso = (Curso)ViewBag.Curso;
+    ViewData["Title"] = $"Matrículas - {curso.Nombre}";
+}
+<div class="container py-4">
+    <h2 class="mb-3">@ViewData["Title"]</h2>
+
+    @if (TempData["Ok"] is string ok)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <b>@ok</b>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <a asp-action="Cursos" class="btn btn-link px-0 mb-3">← Volver a cursos</a>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                    <th>Fecha registro</th>
+                    <th style="width:220px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@m.UsuarioEmail (@m.UsuarioId)</td>
+                    <td>
+                        @switch (m.Estado)
+                        {
+                            case EstadoMatricula.Pendiente:
+                                @:<span class="badge bg-warning text-dark">Pendiente</span>
+                                break;
+                            case EstadoMatricula.Confirmada:
+                                @:<span class="badge bg-success">Confirmada</span>
+                                break;
+                            case EstadoMatricula.Cancelada:
+                                @:<span class="badge bg-secondary">Cancelada</span>
+                                break;
+                        }
+                    </td>
+                    <td>@m.FechaRegistro.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td class="d-flex gap-2">
+                        <form asp-action="Confirmar" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@m.Id" />
+                            <button class="btn btn-sm btn-outline-success" type="submit"
+                                    @(m.Estado == EstadoMatricula.Confirmada ? "disabled" : null)>
+                                Confirmar
+                            </button>
+                        </form>
+                        <form asp-action="Cancelar" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@m.Id" />
+                            <button class="btn btn-sm btn-outline-danger" type="submit"
+                                    @(m.Estado == EstadoMatricula.Cancelada ? "disabled" : null)>
+                                Cancelar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

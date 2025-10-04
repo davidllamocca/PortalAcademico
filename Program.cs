@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection; // <- para la ext. AddRazorRuntimeCompilation
 using PortalAcademico.Data;
+using PortalAcademico.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
