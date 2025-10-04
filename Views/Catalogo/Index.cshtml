@@ -1,0 +1,92 @@
+@model IEnumerable<Curso>
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Catálogo de cursos";
+    string? q        = Context.Request.Query["nombre"];
+    string? minCred  = Context.Request.Query["minCred"];
+    string? maxCred  = Context.Request.Query["maxCred"];
+    string? hIni     = Context.Request.Query["hIni"];
+    string? hFin     = Context.Request.Query["hFin"];
+}
+
+<div class="container py-4">
+    <h1 class="mb-3">@ViewData["Title"]</h1>
+
+    <!-- Filtros -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <label class="form-label">Nombre</label>
+            <input name="nombre" class="form-control" value="@q" placeholder="Ej. Algoritmos, BD…" />
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label">Créditos ≥</label>
+            <input name="minCred" type="number" min="0" class="form-control" value="@minCred" />
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label">Créditos ≤</label>
+            <input name="maxCred" type="number" min="0" class="form-control" value="@maxCred" />
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label">Desde (hora)</label>
+            <input name="hIni" type="time" class="form-control" value="@hIni" />
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label">Hasta (hora)</label>
+            <input name="hFin" type="time" class="form-control" value="@hFin" />
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+        </div>
+    </form>
+
+    <!-- Validaciones (ModelState) -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+
+    <!-- Resultado -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <p class="mb-0"><strong>@Model.Count()</strong> curso(s) encontrado(s)</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        @foreach (var c in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-1">@c.Nombre</h5>
+                            <span class="badge bg-success" title="Curso activo">Activo</span>
+                        </div>
+                        <h6 class="text-muted mb-2">@c.Codigo</h6>
+
+                        <ul class="list-unstyled small mb-3">
+                            <li><strong>Créditos:</strong> @c.Creditos</li>
+                            <li>
+                                <strong>Horario:</strong>
+                                @c.HorarioInicio.ToString("HH\\:mm") – @c.HorarioFin.ToString("HH\\:mm")
+                            </li>
+                            <li><strong>Cupo máx.:</strong> @c.CupoMaximo</li>
+                        </ul>
+
+                        <a class="btn btn-outline-primary"
+                           asp-action="Detalle"
+                           asp-route-id="@c.Id">
+                           Ver / Inscribirse
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
