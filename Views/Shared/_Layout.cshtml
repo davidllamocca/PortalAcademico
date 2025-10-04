@@ -27,10 +27,30 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
+<<<<<<< HEAD
                             <a class="nav-link" asp-controller="Catalogo" asp-action="Index">Catálogo</a>
+=======
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Catalogo" asp-action="Index">Catálogo</a>
+>>>>>>> feature/sesion-redis
                         </li>
 
                     </ul>
+                    @{
+                        // 🔹 Leer sesión para el botón de retorno
+                        var lastId  = Context.Session.GetInt32("LastCursoId");
+                        var lastNom = Context.Session.GetString("LastCursoNombre");
+                    }
+                    @if (lastId.HasValue && !string.IsNullOrWhiteSpace(lastNom))
+                    {
+                        <a class="btn btn-sm btn-outline-primary me-2"
+                        asp-area=""
+                        asp-controller="Catalogo"
+                        asp-action="Detalle"
+                        asp-route-id="@lastId">
+                            Volver a @lastNom
+                        </a>
+                    }
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
