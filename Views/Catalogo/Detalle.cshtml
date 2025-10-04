@@ -1,0 +1,96 @@
+@model Curso
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Detalle del curso";
+}
+
+<div class="container py-4">
+    <a asp-action="Index" class="btn btn-link px-0 mb-3">← Volver al catálogo</a>
+
+    <!-- Mensajes de acción (TempData) -->
+    @if (TempData["Ok"] is string ok)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ok
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] is string err)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @err
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <h2 class="card-title mb-1">@Model.Nombre</h2>
+                @if (Model.Activo)
+                {
+                    <span class="badge bg-success">Activo</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Inactivo</span>
+                }
+            </div>
+            <h6 class="text-muted">@Model.Codigo</h6>
+
+            <div class="row mt-3">
+                <div class="col-12 col-md-6">
+                    <dl class="row mb-0">
+                        <dt class="col-5">Créditos</dt>
+                        <dd class="col-7">@Model.Creditos</dd>
+
+                        <dt class="col-5">Horario</dt>
+                        <dd class="col-7">
+                            @Model.HorarioInicio.ToString("HH\\:mm") – @Model.HorarioFin.ToString("HH\\:mm")
+                        </dd>
+
+                        <dt class="col-5">Cupo máximo</dt>
+                        <dd class="col-7">@Model.CupoMaximo</dd>
+                    </dl>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="p-3 bg-light rounded">
+                        <p class="mb-2"><strong>Acción</strong></p>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            @if (Model.Activo)
+                            {
+                                <form asp-controller="Matriculas" asp-action="Inscribirse" method="post" class="d-flex gap-2">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="cursoId" value="@Model.Id" />
+                                    <button class="btn btn-primary" type="submit">Inscribirme</button>
+                                    <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning mb-0">
+                                    Este curso está inactivo temporalmente.
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="d-flex flex-column gap-2">
+                                <div class="alert alert-info mb-0">
+                                    Inicia sesión para inscribirte.
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Iniciar sesión</a>
+                                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-secondary">Registrarme</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
