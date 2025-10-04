@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "h1qtMPlC3jg=",
+  "dgSpecHash": "X5g50500mA0=",
   "success": true,
   "projectFilePath": "C:\\Users\\car_v\\OneDrive\\Desktop\\PortalAcademico\\PortalAcademico.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,9 @@
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\9.0.8\\microsoft.aspnetcore.diagnostics.entityframeworkcore.9.0.8.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\9.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.9.0.8.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\9.0.8\\microsoft.aspnetcore.identity.ui.9.0.8.nupkg.sha512",
+    "C:\\Users\\car_v\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\6.0.0\\microsoft.aspnetcore.mvc.razor.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\car_v\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\9.0.9\\microsoft.aspnetcore.mvc.razor.runtimecompilation.9.0.9.nupkg.sha512",
+    "C:\\Users\\car_v\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.build.locator\\1.7.8\\microsoft.build.locator.1.7.8.nupkg.sha512",
@@ -17,6 +20,7 @@
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.codeanalysis.common\\4.8.0\\microsoft.codeanalysis.common.4.8.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.8.0\\microsoft.codeanalysis.csharp.4.8.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\4.8.0\\microsoft.codeanalysis.csharp.workspaces.4.8.0.nupkg.sha512",
+    "C:\\Users\\car_v\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.0\\microsoft.codeanalysis.razor.6.0.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.8.0\\microsoft.codeanalysis.workspaces.common.4.8.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.codeanalysis.workspaces.msbuild\\4.8.0\\microsoft.codeanalysis.workspaces.msbuild.4.8.0.nupkg.sha512",
     "C:\\Users\\car_v\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.9\\microsoft.data.sqlite.core.9.0.9.nupkg.sha512",
