@@ -27,11 +27,19 @@ public class CatalogoController : Controller
         return View(cursos);
     }
 
+    // using Microsoft.EntityFrameworkCore;
     public async Task<IActionResult> Detalle(int id)
     {
-        var curso = await _db.Cursos.FindAsync(id);
-        if (curso is null || !curso.Activo) return NotFound();
-        // en Q4 guardaremos aquí "último curso visitado" en sesión
+        var curso = await _db.Cursos
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Id == id && c.Activo);
+        if (curso is null) return NotFound();
+
+        var usados = await _db.Matriculas
+            .CountAsync(m => m.CursoId == id && m.Estado != EstadoMatricula.Cancelada);
+
+        ViewBag.Usados = usados; // para la vista
         return View(curso);
     }
+
 }
