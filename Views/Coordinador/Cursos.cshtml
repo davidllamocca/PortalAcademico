@@ -1,0 +1,67 @@
+@using PortalAcademico.Data
+
+@model IEnumerable<Curso>
+@{
+    ViewData["Title"] = "Cursos (Coordinador)";
+    var counts = (IDictionary<int,int>?)ViewBag.Inscritos ?? new Dictionary<int,int>();
+}
+<div class="container py-4">
+    <h2 class="mb-3">@ViewData["Title"]</h2>
+
+    @if (TempData["Ok"] is string ok)
+    {
+        <div class="alert alert-success alert-dismissible fade show"><b>@ok</b>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="mb-3">
+        <a asp-action="Crear" class="btn btn-primary">+ Nuevo curso</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Cod.</th>
+                    <th>Nombre</th>
+                    <th>Créditos</th>
+                    <th>Horario</th>
+                    <th>Cupo</th>
+                    <th>Inscritos</th>
+                    <th>Estado</th>
+                    <th style="width:250px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var c in Model)
+            {
+                var usados = counts.TryGetValue(c.Id, out var v) ? v : 0;
+                <tr>
+                    <td>@c.Codigo</td>
+                    <td>@c.Nombre</td>
+                    <td>@c.Creditos</td>
+                    <td>@c.HorarioInicio.ToString("HH\\:mm")–@c.HorarioFin.ToString("HH\\:mm")</td>
+                    <td>@c.CupoMaximo</td>
+                    <td>@usados</td>
+                    <td>
+                        @if (c.Activo) { <span class="badge bg-success">Activo</span> }
+                        else { <span class="badge bg-secondary">Inactivo</span> }
+                    </td>
+                    <td class="d-flex gap-2">
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Editar" asp-route-id="@c.Id">Editar</a>
+                        <a class="btn btn-sm btn-outline-secondary" asp-action="Matriculas" asp-route-cursoId="@c.Id">Matrículas</a>
+                        <form asp-action="Toggle" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@c.Id" />
+                            <button class="btn btn-sm @(c.Activo ? "btn-outline-warning" : "btn-outline-success")" type="submit">
+                                @(c.Activo ? "Desactivar" : "Activar")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
